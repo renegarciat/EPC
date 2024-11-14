@@ -3,16 +3,24 @@
 
 ## Instructions
   
-Create new file in the folder *challenges\ValidSyntaxP\Submissions*. Name it using the format of the following example:
+- Create new file in the folder *challenges\ValidSyntaxP\Submissions*. Name it using the format of the following example:
 > Andres_Abundis_ValidParentheses.c
 
-Copy the function header in file *challenges\ValidSyntaxP\FunctionHeader.c*.
-Paste it in the file you just created and develop your solution there.
-Please do not copy the solution/ideas of the other members of the community.
+- Copy the function header in file *challenges\ValidSyntaxP\FunctionHeader.c*.
+- Paste it in the file you just created and develop your solution there.
+- Please do not copy the solution/ideas of the other members of the community.
+- Working in the solution by yourself is the best way to develop your skills!
+
+## Deadline
 
 The solution must be submitted to the folder *challenges/ValidSyntaxP/Submissions* before the 20th of November at 11:59pm.
 
-Working in the solution by yourself is the best way to develop your skills!
+## Evaluation
+
+The Co-Leads of the community will evaluate the solutions
+- We will evaluate time and memory complexity.
+- We will measure the time it takes your program to execute a specific input.
+- We will evualuate the originality of your solution.
 
 ## Problem Description
 
