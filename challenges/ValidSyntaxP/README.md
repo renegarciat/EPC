@@ -6,9 +6,12 @@
 Create new file in the folder *challenges\ValidSyntaxP\Submissions*. Name it using the format of the following example:
 > Andres_Abundis_ValidParentheses.c
 
-Copy the function header in file *challenges\ValidParentheses\FunctionHeader.c*.
+Copy the function header in file *challenges\ValidSyntaxP\FunctionHeader.c*.
 Paste it in the file you just created and develop your solution there.
 Please do not copy the solution/ideas of the other members of the community.
+
+The solution must be submitted to the folder *challenges/ValidSyntaxP/Submissions* before the 20th of November at 11:59pm.
+
 Working in the solution by yourself is the best way to develop your skills!
 
 ## Problem Description
