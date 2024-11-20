@@ -11,17 +11,17 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 /****************************************************************************
 *
-* 				Macro
+* 									Macro
 *
 ****************************************************************************/
 #define ZERO 0
 
 /****************************************************************************
 *
-* 				Is valid the input values?
+* 							Brackets?
 *
 ****************************************************************************/
-int isValid (char input1, char input2, char InputC, int out)
+int Brackets(char input1, char input2, char InputC, int out)
 {
     if(input1 == InputC)
     {
@@ -39,26 +39,45 @@ int isValid (char input1, char input2, char InputC, int out)
 
 /****************************************************************************
 *
-* 					Main function
+* 							Is valid the input values?
+*
+****************************************************************************/
+int isValid (char *s)
+{
+    int conti[3] = {0,0 ,0};
+    
+    for(int i = ZERO; i < strlen(s); i++)
+    {
+        conti[0] = Brackets('(', ')', s[i], conti[0]);
+        conti[1] = Brackets('[', ']', s[i], conti[1]);
+        conti[2] = Brackets('{', '}', s[i], conti[2]);
+        
+        if((ZERO > conti[0]) ||  (ZERO > conti[1]) || (ZERO > conti[2]))
+        {
+            i = strlen(s);
+        }
+    }
+    if ((ZERO == conti[0]) && (ZERO == conti[1]) && (ZERO == conti[2]))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/****************************************************************************
+*
+* 									Main function
 *
 ****************************************************************************/
 int main()
 {
-    int conti[3] = {0,0 ,0};
+    
     char *c;
     scanf("%ms", &c);
-    for(int i = ZERO; i < strlen(c); i++)
-    {
-        conti[0] = isValid('(', ')', c[i], conti[0]);
-        conti[1] = isValid('[', ']', c[i], conti[1]);
-        conti[2] = isValid('{', '}', c[i], conti[2]);
-        
-        if((ZERO > conti[0]) ||  (ZERO > conti[1]) || (ZERO > conti[2]))
-        {
-            i = strlen(c);
-        }
-    }
-    if((ZERO == conti[0]) && (ZERO == conti[1]) && (ZERO == conti[2]))
+    if(isValid(c))
     {
         printf("es valido \n");
     }
