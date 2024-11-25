@@ -13,7 +13,7 @@
 
 ## Deadline
 
-The solution must be submitted to the folder *challenges/ValidSudoku/Submissions* before *Sunday the 1st of December at 11:59pm*.
+The solution must be submitted to the folder *challenges/ValidSudoku/Submissions* before **Sunday the 1st of December at 11:59pm**.
 
 ## Evaluation
 
