@@ -39,7 +39,7 @@ Note:
 
 1. Example:\
 
-![example of sudoku matrix](..\..\resources\challenges\ValidSudoku\exampleMatrix.png "Example Sudoku")\
+![example of sudoku matrix](../../resources/challenges/ValidSudoku/exampleMatrix.png "Example Sudoku")\
 
 Input: board = 
 [["5","3",".",".","7",".",".",".","."]\
