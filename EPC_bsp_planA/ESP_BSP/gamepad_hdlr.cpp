@@ -2,9 +2,19 @@
 
 ControllerPtr myControllers[BP32_MAX_GAMEPADS];
 
+struct sticksLastValue_T
+{
+    int leftStickX = 0;
+    int leftStickY = 0;
+    int rightStickX = 0;
+    int rightStickY = 0;
+};
+
+sticksLastValue_T sticksLastValue;
+
 gamepad_hdlr::gamepad_hdlr() 
 {
-  // Constructor: puedes inicializar valores por defecto aquí si lo necesitas
+
 }
 
 void gamepad_hdlr::begin() 
@@ -24,8 +34,6 @@ void gamepad_hdlr::main()
     processControllers();
   }
 }
-
-
 
 void gamepad_hdlr::onConnectedController(ControllerPtr ctl) 
 {
@@ -92,53 +100,31 @@ void gamepad_hdlr::dumpGamepad(ControllerPtr ctl)
 
 void gamepad_hdlr::processGamepad(ControllerPtr ctl) 
 {
-    // There are different ways to query whether a button is pressed.
-    // By query each button individually:
-    //  a(), b(), x(), y(), l1(), etc...
-    if (ctl->a()) {
-        static int colorIdx = 0;
-        // Some gamepads like DS4 and DualSense support changing the color LED.
-        // It is possible to change it by calling:
-        switch (colorIdx % 3) {
-            case 0:
-                // Red
-                ctl->setColorLED(255, 0, 0);
-                break;
-            case 1:
-                // Green
-                ctl->setColorLED(0, 255, 0);
-                break;
-            case 2:
-                // Blue
-                ctl->setColorLED(0, 0, 255);
-                break;
-        }
-        colorIdx++;
+    /*Add all the function calls to motion controller here*/
+    if (ctl->r1()) 
+    {
+        Serial.println("RB button pressed");
     }
 
-    if (ctl->b()) {
-        // Turn on the 4 LED. Each bit represents one LED.
-        static int led = 0;
-        led++;
-        // Some gamepads like the DS3, DualSense, Nintendo Wii, Nintendo Switch
-        // support changing the "Player LEDs": those 4 LEDs that usually indicate
-        // the "gamepad seat".
-        // It is possible to change them by calling:
-        ctl->setPlayerLEDs(led & 0x0f);
+    if (ctl->l1()) 
+    {
+        Serial.println("LB button pressed");
     }
 
-    if (ctl->x()) {
-        // Some gamepads like DS3, DS4, DualSense, Switch, Xbox One S, Stadia support rumble.
-        // It is possible to set it by calling:
-        // Some controllers have two motors: "strong motor", "weak motor".
-        // It is possible to control them independently.
-        ctl->playDualRumble(0 /* delayedStartMs */, 250 /* durationMs */, 0x80 /* weakMagnitude */,
-                            0x40 /* strongMagnitude */);
+    /*Sticks will only be reported if they move more than 10 units*/
+    if((abs(sticksLastValue.leftStickX - ctl->axisX()) >= 10) || (abs(sticksLastValue.leftStickY - ctl->axisY()) >= 10))
+    {
+        sticksLastValue.leftStickX = ctl->axisX();
+        sticksLastValue.leftStickY = ctl->axisY();
+        Serial.printf("Left stick new values: x: %d y:%d\n", sticksLastValue.leftStickX, sticksLastValue.leftStickY);
     }
 
-    // Another way to query controller data is by getting the buttons() function.
-    // See how the different "dump*" functions dump the Controller info.
-    dumpGamepad(ctl);
+    if((abs(sticksLastValue.rightStickX - ctl->axisRX()) >= 10) || (abs(sticksLastValue.rightStickY - ctl->axisRY()) >= 10))
+    {
+        sticksLastValue.rightStickX = ctl->axisRX();
+        sticksLastValue.rightStickY = ctl->axisRY();
+        Serial.printf("Right stick new values: x: %d y:%d\n", sticksLastValue.rightStickX, sticksLastValue.rightStickY);
+    }
 }
 
 void gamepad_hdlr::processControllers() 
