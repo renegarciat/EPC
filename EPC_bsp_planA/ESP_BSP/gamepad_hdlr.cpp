@@ -1,6 +1,6 @@
 #include "gamepad_hdlr.hpp"
 
-ControllerPtr myControllers[BP32_MAX_GAMEPADS];
+ControllerPtr myControllers[1];
 
 struct sticksLastValue_T
 {
