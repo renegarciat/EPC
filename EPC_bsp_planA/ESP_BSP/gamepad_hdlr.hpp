@@ -4,7 +4,8 @@
 #include <Arduino.h>
 #include <Bluepad32.h>
 
-class gamepad_hdlr {
+class gamepad_hdlr 
+{
 public:
   gamepad_hdlr();
   void begin();

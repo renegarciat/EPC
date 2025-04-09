@@ -1,14 +1,12 @@
-#include "gamepad_hdlr.hpp"
+#include "os_task_mgr.hpp"
 
-gamepad_hdlr gamepad_o; 
+os_task_mgr os_task_mgr_o; 
 
 void setup() {
   Serial.begin(115200);
-  gamepad_o.begin();
+  os_task_mgr_o.initTasks();
 }
 
 void loop() 
 {
-  gamepad_o.main();
-  delay(10);
 }
