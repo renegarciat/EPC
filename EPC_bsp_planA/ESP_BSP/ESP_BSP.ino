@@ -1,4 +1,5 @@
 #include "gamepad_hdlr.hpp"
+#include "motor_ctrl.hpp"
 
 gamepad_hdlr gamepad_o; 
 
