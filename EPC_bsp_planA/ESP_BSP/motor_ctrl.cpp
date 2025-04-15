@@ -1,5 +1,4 @@
 #include "motor_ctrl.hpp"
-#include <Arduino.h>
 
 bool motor_ctrl::set_motor_speed(motor_id_t motor, motor_speed_t speed, motor_direction_t direction) {
   /*NOTE: 
@@ -9,47 +8,65 @@ bool motor_ctrl::set_motor_speed(motor_id_t motor, motor_speed_t speed, motor_di
   char pwm_value = _get_PWM_value(speed);
   switch (motor) {
     case FRONT_LEFT:
-      if (direction) { // Forward
+      if (direction == FORWARD) { // Forward
         digitalWrite(DIRA,HIGH);
-        analogWrite(PWMA,pwm_value);
       }
       else { // Backward
         digitalWrite(DIRA,LOW);
-        analogWrite(PWMA,pwm_value);
       }
+      analogWrite(PWMA,pwm_value);
       break;
     case FRONT_RIGHT:
       if (direction) { // Forward
         digitalWrite(DIRB,LOW);
-        analogWrite(PWMB,pwm_value);
       }
       else { // Backward
         digitalWrite(DIRB,HIGH);
-        analogWrite(PWMB,pwm_value);
       }
+      analogWrite(PWMB,pwm_value);
       break;
     case REAR_LEFT:
       if (direction) { // Forward
         digitalWrite(DIRC,HIGH);
-        analogWrite(PWMC,pwm_value);
       }
       else { // Backward
         digitalWrite(DIRC,LOW);
-        analogWrite(PWMC,pwm_value);
       }
+      analogWrite(PWMC,pwm_value);
       break;
     case REAR_RIGHT:
       if (direction) { // Forward
         digitalWrite(DIRD,LOW);
-        analogWrite(PWMD,pwm_value);
       }
       else { // Backward
         digitalWrite(DIRD,HIGH);
-        analogWrite(PWMD,pwm_value);
       }
+      analogWrite(PWMD,pwm_value);
       break;
     default:
       return false; // Invalid motor ID
   return true; // Success
   }
+}
+
+char motor_ctrl::_get_PWM_value(motor_speed_t speed) {
+  switch (speed) {
+    case OFF: return 0;
+    case VERY_LOW_SPEED: return 50;
+    case LOW_SPEED: return 100;
+    case MID_SPEED: return 150;
+    case HIGH_SPEED: return 200;
+    default: return 0; // Invalid speed
+  }
+}
+
+  motor_ctrl::motor_ctrl() {
+  pinMode(DIRA, OUTPUT);
+  pinMode(PWMA, OUTPUT);  
+  pinMode(DIRB, OUTPUT);
+  pinMode(PWMB, OUTPUT); 
+  pinMode(DIRC, OUTPUT);
+  pinMode(PWMC, OUTPUT);
+  pinMode(DIRD, OUTPUT);
+  pinMode(PWMD, OUTPUT);
 }
