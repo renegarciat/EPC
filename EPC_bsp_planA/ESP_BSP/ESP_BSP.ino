@@ -1,14 +1,16 @@
-#include "gamepad_hdlr.hpp"
+#include "motor_ctrl.hpp"
 
-gamepad_hdlr gamepad_o; 
-
+motor_ctrl motor_o;
 void setup() {
   Serial.begin(115200);
-  gamepad_o.begin();
 }
 
 void loop() 
 {
-  gamepad_o.main();
-  delay(10);
+  // Move forward for 3 seconds
+  motor_o.set_motor_speed(FRONT_LEFT, HIGH_SPEED, FORWARD);
+  delay(3000);
+  // Slowly move backward for 3 seconds.
+  motor_o.set_motor_speed(FRONT_LEFT, VERY_LOW_SPEED, BACKWARD);
+  delay(3000);
 }
