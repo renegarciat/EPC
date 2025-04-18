@@ -1,5 +1,28 @@
 #include "motor_ctrl.hpp"
 
+  // motor_ctrl::motor_ctrl(uint32_t frequency, uint8_t pwm_resolution) {
+  // this->frequency = frequency;
+  // this->pwm_resolution = pwm_resolution;
+  // // Configure the 4 PWM channels
+  // ledcSetup(pwm_pin0, frequency, pwm_resolution);
+  // ledcSetup(pwm_pin1, frequency, pwm_resolution);
+  // ledcSetup(pwm_pin2, frequency, pwm_resolution);
+  // ledcSetup(pwm_pin3, frequency, pwm_resolution);
+  // pinMode(DIRA, OUTPUT);
+  // }
+
+motor_ctrl::motor_ctrl() {
+  // Note: ledcAttach function assigns a channel automatically.
+  ledcAttach(motorFL_PWM_pin, frequency, pwm_resolution);
+  pinMode(motorFL_direction_pin, OUTPUT);
+  ledcAttach(motorFR_PWM_pin, frequency, pwm_resolution);
+  pinMode(motorFR_direction_pin, OUTPUT);
+  ledcAttach(motorRL_PWM_pin, frequency, pwm_resolution);
+  pinMode(motorRL_direction_pin, OUTPUT);
+  ledcAttach(motorRR_PWM_pin, frequency, pwm_resolution);
+  pinMode(motorRR_direction_pin, OUTPUT);
+  }
+
 bool motor_ctrl::set_motor_speed(motor_id_t motor, motor_speed_t speed, motor_direction_t direction) {
   /*NOTE: 
   * Be careful when calling this function multiple times in a short period of time, consider deadtime between calls to avoid shorting the motors.
@@ -10,40 +33,40 @@ bool motor_ctrl::set_motor_speed(motor_id_t motor, motor_speed_t speed, motor_di
   switch (motor) {
     case FRONT_LEFT:
       if (direction == FORWARD) { // Forward
-        digitalWrite(DIRA,HIGH);
+        digitalWrite(motorFL_direction_pin,HIGH);
       }
       else { // Backward
-        digitalWrite(DIRA,LOW);
+        digitalWrite(motorFL_direction_pin,LOW);
       }
-      //analogWrite(PWMA,pwm_value);
-      ledcWrite(2, pwm_value); // Set PWM value for motor A
+      ledcWrite(motorFL_PWM_pin, pwm_value); // Set PWM value for motor A
       break;
     case FRONT_RIGHT:
       if (direction) { // Forward
-        digitalWrite(DIRB,LOW);
+        digitalWrite(motorFR_direction_pin,LOW);
       }
       else { // Backward
-        digitalWrite(DIRB,HIGH);
+        digitalWrite(motorFR_direction_pin,HIGH);
       }
-      analogWrite(PWMB,pwm_value);
+      ledcWrite(motorFR_PWM_pin, pwm_value); // Set PWM value for motor B
       break;
     case REAR_LEFT:
       if (direction) { // Forward
-        digitalWrite(DIRC,HIGH);
+        digitalWrite(motorRL_direction_pin,HIGH);
       }
       else { // Backward
-        digitalWrite(DIRC,LOW);
+        digitalWrite(motorRL_direction_pin,LOW);
       }
-      analogWrite(PWMC,pwm_value);
+      ledcWrite(motorRL_PWM_pin, pwm_value); // Set PWM value for motor C
       break;
     case REAR_RIGHT:
       if (direction) { // Forward
-        digitalWrite(DIRD,LOW);
+        digitalWrite(motorRR_direction_pin,LOW);
       }
       else { // Backward
-        digitalWrite(DIRD,HIGH);
+        digitalWrite(motorRR_direction_pin,HIGH);
       }
-      analogWrite(PWMD,pwm_value);
+      ledcWrite(motorRR_PWM_pin, pwm_value); // Set PWM value for motor A
+
       break;
     default:
       return false; // Invalid motor ID
@@ -60,26 +83,4 @@ uint32_t motor_ctrl::_get_PWM_value(motor_speed_t speed) {
     case HIGH_SPEED: return 200;
     default: return 0; // Invalid speed
   }
-}
-  // motor_ctrl::motor_ctrl(uint32_t frequency, uint8_t pwm_resolution) {
-  // this->frequency = frequency;
-  // this->pwm_resolution = pwm_resolution;
-  // // Configure the 4 PWM channels
-  // ledcSetup(pwm_pin0, frequency, pwm_resolution);
-  // ledcSetup(pwm_pin1, frequency, pwm_resolution);
-  // ledcSetup(pwm_pin2, frequency, pwm_resolution);
-  // ledcSetup(pwm_pin3, frequency, pwm_resolution);
-  // pinMode(DIRA, OUTPUT);
-  // }
-
-  motor_ctrl::motor_ctrl() {
-  ledcAttach(2, frequency, pwm_resolution);
-  pinMode(DIRA, OUTPUT);
-  // pinMode(PWMA, OUTPUT);  
-  // pinMode(DIRB, OUTPUT);
-  // pinMode(PWMB, OUTPUT); 
-  // pinMode(DIRC, OUTPUT);
-  // pinMode(PWMC, OUTPUT);
-  // pinMode(DIRD, OUTPUT);
-  // pinMode(PWMD, OUTPUT);
 }

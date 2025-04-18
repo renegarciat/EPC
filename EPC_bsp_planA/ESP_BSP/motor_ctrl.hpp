@@ -1,7 +1,7 @@
 #ifndef MOTOR_CTRL_HPP
 #define MOTOR_CTRL_HPP
 
-#include <Arduino.h>
+#include <Arduino.h> //Is this needed?
 
 /* Data type used to set the speed of a motor. */
 typedef enum {
@@ -26,16 +26,6 @@ typedef enum { //We could use enum class here, but consider portability to C.
 typedef bool motor_direction_t; // We could use enum class here, but consider portability to C.
 const motor_direction_t FORWARD = true;
 const motor_direction_t BACKWARD = false;
-
-// ESP32 GPIO pin definitions for motor control
-#define PWMA 15
-#define DIRA 0
-#define PWMD 3 
-#define DIRD 2 
-#define PWMC 5 
-#define DIRC 4 
-#define PWMB 6 
-#define DIRB 7 
 
 class motor_ctrl {
 public:
@@ -62,28 +52,26 @@ public:
   bool set_motor_speed(motor_id_t motor, motor_speed_t speed, motor_direction_t direction);
 
 private:
-  /*Note: Channels run from 0 to 15 */
-  const unsigned int frequency = 5000; //5 KHz
+  /*Note: Channels range from 0 to 15. Consider an array for this */
+  const uint32_t frequency = 5000; //5 KHz
   const unsigned int hb1_pwm_ain1 = 34; //Corresponds to PWMA (pin 9 of shield) (pin D34 of ESP32) (GPIO?)
   const unsigned int hb1_channel = 0 ;//Start from channel 0
   const unsigned int pwm_resolution = 8; //[bits] Could be increased if needed.
-  uint8_t pwm_pin0 = 0; // PWM pin for motor 1 (left front)
-  // const unsigned int hb1_pwm_ain2 = 35;
-  // const unsigned int hb1_pwm_ain1 = 15; //Corresponds to PWMA (pin 9 of shield) (pin D34 of ESP32) (GPIO15)
-  // const unsigned int hb1_pwm_ain2 = 32; //Corresponds to DIRA (pin 8 of shield) (pin D2 of ESP32) (GPIO32)
-  // const unsigned int hb1_pwm_bin1 = 32;
-  // const unsigned int hb1_pwm_bin2 = 33;
-  // const unsigned int hb2_pwm_ain1 = 25;
-  // const unsigned int hb2_pwm_ain2 = 26;
-  // const unsigned int hb2_pwm_bin1 = 27;
-  // const unsigned int hb2_pwm_bin2 = 14;
-
+  const uint8_t motorFL_PWM_pin = 2; //Corresponds to PWM of Front Left motor (pin 9 of shield) (pin 2 of ESP32)
+  const uint8_t motorFL_direction_pin = 0; // Corresponds to direction of Front Left motor (pin 8 of shield) (pin 0 of ESP32)
+  const uint8_t motorFR_PWM_pin = 4; //Corresponds to PWM of Front Right motor (pin 10 of shield) (pin 4 of ESP32)
+  const uint8_t motorFR_direction_pin = 5; // Corresponds to direction of Front Right motor (pin 7 of shield) (pin 5 of ESP32)
+  const uint8_t motorRL_PWM_pin = 18; //Corresponds to PWM of Rear Left motor (pin 11 of shield) (pin 18 of ESP32)
+  const uint8_t motorRL_direction_pin = 19; // Corresponds to direction of Rear Left motor (pin 6 of shield) (pin 19 of ESP32)
+  const uint8_t motorRR_PWM_pin = 21; //Corresponds to PWM of Rear Right motor (pin 12 of shield) (pin 21 of ESP32)
+  const uint8_t motorRR_direction_pin = 22; // Corresponds to direction of Rear Right motor (pin 5 of shield) (pin 22 of ESP32)
+  
   /**
    * @brief Converts the motor speed to a PWM value.
    * @param speed The desired motor speed (0-4). 
    * @return The corresponding PWM value (0-255).
    */
-  uint32_t _get_PWM_value(motor_speed_t speed);
+  uint32_t _get_PWM_value(motor_speed_t speed); //TODO: Modify to accept different resolutions. Use pwm_resolution variable.
 };
 
 #endif // MOTOR_CTRL_HPP
